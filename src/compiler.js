@@ -124,7 +124,7 @@ const compileTaskDefinition = (images, task) => ({
         Environment: toEnvironment(task.environment),
         EntryPoint: task.entryPoint,
         Command: task.command,
-        LogConfiguration: {
+        ...{...{LogConfiguration: {
           LogDriver: 'awslogs',
           Options: {
             'awslogs-region': { 'Fn::Sub': '${AWS::Region}' },
@@ -133,8 +133,8 @@ const compileTaskDefinition = (images, task) => ({
             },
             'awslogs-stream-prefix': 'fargate',
           },
-        },
-        ...task.cloudFormationResource.container,
+        }},
+        ...task.cloudFormationResource.container},
       },
       ...task.cloudFormationResource.additionalContainers,
     ],
@@ -161,6 +161,8 @@ const compileScheduledTask = (identifier, task) => ({
   Type: 'AWS::Events::Rule',
   DependsOn: task.dependsOn,
   Properties: {
+    Name: task.scheduleName || task.name + 'ScheduledTask',
+    State: task.scheduleState || 'ENABLED',
     ScheduleExpression: task.schedule,
     Targets: [
       {

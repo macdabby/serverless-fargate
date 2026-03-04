@@ -99,6 +99,8 @@ module.exports = {
               ],
             },
             schedule: { type: 'string' },
+            scheduleName: { type: 'string' },
+            scheduleState: { type: 'string'},
             cloudFormationResource: {
               type: 'object',
               properties: {

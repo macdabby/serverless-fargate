@@ -56,6 +56,8 @@ const parseTask = (global, name, task) => {
     return {
       ...definition,
       schedule: task.schedule,
+      scheduleName: task.scheduleName,
+      scheduleState: task.scheduleState,
     };
   }
 
