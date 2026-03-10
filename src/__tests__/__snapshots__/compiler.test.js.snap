@@ -423,7 +423,9 @@ Object {
     "Mytask2ScheduledTask": Object {
       "DependsOn": undefined,
       "Properties": Object {
+        "Name": "my-task-2ScheduledTask",
         "ScheduleExpression": "rate(1 minute)",
+        "State": "ENABLED",
         "Targets": Array [
           Object {
             "Arn": Object {
@@ -653,7 +655,9 @@ Object {
     "MytaskScheduledTask": Object {
       "DependsOn": undefined,
       "Properties": Object {
+        "Name": "my-taskScheduledTask",
         "ScheduleExpression": "rate(1 minute)",
+        "State": "ENABLED",
         "Targets": Array [
           Object {
             "Arn": Object {

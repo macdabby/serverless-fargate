@@ -514,6 +514,68 @@ test('scheduled task with custom IAM roles', () => {
   expect(
     compiled.Resources.MytaskScheduledTask.Properties.Targets[0].RoleArn
   ).toEqual('arn:aws:iam::123456789:role/CustomExecutionRole');
+  expect(
+      compiled.Resources.MytaskScheduledTask.Properties.Name
+  ).toEqual('my-taskScheduledTask');
+  expect(
+    compiled.Resources.MytaskScheduledTask.Properties.State
+  ).toEqual('ENABLED');
+});
+
+test('scheduled task with name and state overrides', () => {
+  const compiled = compile(
+    {
+      'my-image': 'image-uri',
+    },
+    {
+      memory: '0.5GB',
+      cpu: 256,
+      vpc: {
+        subnetIds: ['subnet-1234', 'subnet-5678'],
+        securityGroupIds: ['sg-1234'],
+      },
+      tags: {},
+      environment: {},
+      cloudFormationResource: {
+        task: {},
+        container: {},
+        additionalContainers: [],
+        service: {},
+      },
+      iamRoleStatements: [],
+      iamManagedPolicies: [],
+      tasks: [
+        {
+          name: 'my-task',
+          image: 'my-image',
+          scheduleName: 'schedule-name',
+          scheduleState: 'schedule-state',
+          vpc: {
+            subnetIds: ['subnet-1234', 'subnet-5678'],
+            securityGroupIds: ['sg-1234'],
+          },
+          memory: '0.5GB',
+          cpu: 256,
+          schedule: 'rate(1 minute)',
+          tags: {},
+          environment: {},
+          cloudFormationResource: {
+            task: {},
+            container: {},
+            additionalContainers: [],
+            service: {},
+          },
+        },
+      ],
+    }
+  );
+
+  expect(
+      compiled.Resources.MytaskScheduledTask.Properties.Name
+  ).toEqual('schedule-name');
+  expect(
+    compiled.Resources.MytaskScheduledTask.Properties.State
+  ).toEqual('schedule-state');
 });
 
 test('mixed scenario - some tasks with custom roles, some without', () => {

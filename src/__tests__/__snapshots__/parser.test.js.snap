@@ -219,6 +219,8 @@ Object {
       "memory": "0.5GB",
       "name": "my-task",
       "schedule": "rate(1 minute)",
+      "scheduleName": undefined,
+      "scheduleState": undefined,
       "tags": Object {},
       "taskRoleArn": undefined,
       "vpc": Object {
